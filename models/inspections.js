@@ -14,4 +14,4 @@ const postSchema = mongoose.Schema({
   noOfEmployess: { type: String, required: true },
 });
 
-module.exports = mongoose.model('Customers', postSchema);
+module.exports = mongoose.model('Inspections', postSchema);

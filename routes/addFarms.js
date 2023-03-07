@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const AddFarm = require("../models/addFarm");
 const Customers = require("../models/customer");
+const Inspections = require("../models/inspections");
 const Tanks = require("../models/tanks");
 
 // router.get('', async (req, res) => {
@@ -20,6 +21,14 @@ router.get("/getCustomers", (req, res, next) => {
     Customers.find().then(documents => {
         res.status(200).json({
             message: "Customers fetched successfully!",
+            posts: documents
+        });
+    });
+});
+router.get("/getInspections", (req, res, next) => {
+    Inspections.find().limit(500).then(documents => {
+        res.status(200).json({
+            message: "Inspections fetched successfully!",
             posts: documents
         });
     });

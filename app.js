@@ -20,8 +20,9 @@ mongoose
   .catch((err) => {
     console.log("Connection failed!", err);
   });
+  // mongodb+srv://sukhvinder_2324:Mongodb@123@cluster0.xef28.mongodb.net/shrimp
 // mongoose
-//   .connect('mongodb+srv://admin:admin@cluster0-8zipq.mongodb.net/shrimp?retryWrites=true&w=majority',
+//   .connect('mongodb+srv://sukhvinder_2324:Mongodb@123@cluster0.xef28.mongodb.net/shrimp?retryWrites=true&w=majority',
 //   {useNewUrlParser: true, useUnifiedTopology: true}
 //   )
 //   .then(() => {
