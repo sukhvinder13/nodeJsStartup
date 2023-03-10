@@ -4,6 +4,8 @@ const AddFarm = require("../models/addFarm");
 const Customers = require("../models/customer");
 const Inspections = require("../models/inspections");
 const Tanks = require("../models/tanks");
+const Users = require("../models/users");
+const transactions = require("../models/transactions");
 
 // router.get('', async (req, res) => {
 //     var getFarm = await AddFarm.find({});
@@ -30,6 +32,22 @@ router.get("/getInspections", (req, res, next) => {
         res.status(200).json({
             message: "Inspections fetched successfully!",
             posts: documents
+        });
+    });
+});
+router.get("/getUsers", (req, res, next) => {
+    Users.find().limit(500).then(documents => {
+        res.status(200).json({
+            message: "Users fetched successfully!",
+            posts: documents
+        });
+    });
+});
+router.get("/getTransactions", (req, res, next) => {
+    transactions.find().then(documents => {
+        res.status(200).json({
+            message: "Transactions fetched successfully!",
+            Transactions: documents
         });
     });
 });

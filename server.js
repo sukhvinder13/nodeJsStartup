@@ -45,7 +45,7 @@
 // app.listen(3000)
 // app.listen(process.event.PORT || 3000);
 // Begins
-const app = require("./app");
+const app = require("./index");
 const debug = require("debug")("node-angular");
 const http = require("http");
 
@@ -92,7 +92,6 @@ const onListening = () => {
 
 const port = normalizePort(process.env.PORT || "3000");
 app.set("port", port);
-
 const server = http.createServer(app);
 server.on("error", onError);
 server.on("listening", onListening);

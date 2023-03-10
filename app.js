@@ -10,27 +10,30 @@ const addFarmWaterReportRoutes=require("./routes/addFarmWaterReport");
 const addPictureRoutes=require("./routes/addPicture");
 const app = express();
 
-mongoose
-  .connect('mongodb://localhost:27017/shrimp',
-    { useNewUrlParser: true, useUnifiedTopology: true }
-  )
-  .then(() => {
-    console.log("Connected to database!");
-  })
-  .catch((err) => {
-    console.log("Connection failed!", err);
-  });
-  // mongodb+srv://sukhvinder_2324:Mongodb@123@cluster0.xef28.mongodb.net/shrimp
 // mongoose
-//   .connect('mongodb+srv://sukhvinder_2324:Mongodb@123@cluster0.xef28.mongodb.net/shrimp?retryWrites=true&w=majority',
-//   {useNewUrlParser: true, useUnifiedTopology: true}
+//   .connect('mongodb://localhost:27017/shrimp',
+//     { useNewUrlParser: true, useUnifiedTopology: true }
 //   )
 //   .then(() => {
 //     console.log("Connected to database!");
 //   })
 //   .catch((err) => {
-//     console.log("Connection failed!",err);
+//     console.log("Connection failed!", err);
 //   });
+  // mongodb+srv://sukhvinder_2324:Mongodb@123@cluster0.xef28.mongodb.net/shrimp
+  // mongodb+srv://sukhvinder_2324:<password>@cluster0.xef28.mongodb.net/test
+  const db='mongodb+srv://sukhvinder_2324:Manshu@cluster0.xef28.mongodb.net/shrimp?retryWrites=true&w=majority'
+mongoose
+  .connect(db,
+  {useNewUrlParser: true,
+     useUnifiedTopology: true}
+  )
+  .then(() => {
+    console.log("Connected to database!");
+  })
+  .catch((err) => {
+    console.log("Connection failed!",err);
+  });
 
 
 app.use(bodyParser.json());
@@ -40,7 +43,8 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
+    "Origin, X-Requested-With, Content-Type, Accept",
+    'Access-Control-Allow-Origin', '*'
   );
   res.setHeader(
     "Access-Control-Allow-Methods",
@@ -48,6 +52,7 @@ app.use((req, res, next) => {
   );
   next();
 });
+app.use(express.static("frontend"));
 app.use("/", addFarmRoutes);
 app.use("/", addFarmOwnerRoutes);
 app.use("/",addFarmMedicinRoutes);
