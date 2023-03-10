@@ -804,8 +804,10 @@ __webpack_require__.r(__webpack_exports__);
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 var environment = {
     production: false,
-    baseUrl: 'http://localhost:3000'
+    // baseUrl:'http://localhost:3000'
+    baseUrl: 'https://nodejsstartup.onrender.com'
     // baseUrl:'http://167.71.228.227:3000'
+    // http://sukhvindersingh.lovestoblog.com/'
 };
 
 
