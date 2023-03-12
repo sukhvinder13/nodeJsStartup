@@ -8,6 +8,7 @@ const addFarmOwnerRoutes = require("./routes/addFarmOwner");
 const addFarmMedicinRoutes = require("./routes/addFarmMedicin");
 const addFarmWaterReportRoutes=require("./routes/addFarmWaterReport");
 const addPictureRoutes=require("./routes/addPicture");
+const login=require("./routes/login");
 const app = express();
 
 // mongoose
@@ -60,6 +61,7 @@ app.use("/",addFarmWaterReportRoutes);
 app.use('/',require('./routes/cultivation'));
 app.use('/',require('./routes/imageUploader'));
 app.use('/',addPictureRoutes);
+app.use('/',login);
 
 module.exports = app;
  // this is the main entry file, this need not be exported
