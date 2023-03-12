@@ -92,9 +92,19 @@ THE SOFTWARE.
 
 @angular/material/card
 
+@angular/material/core
+
+@angular/material/form-field
+
+@angular/material/paginator
+
 @angular/material/progress-spinner
 
 @angular/material/radio
+
+@angular/material/select
+
+@angular/material/table
 
 @angular/material/tooltip
 
