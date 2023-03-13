@@ -5,15 +5,11 @@ const Customers = require("../models/customer");
 const Inspections = require("../models/inspections");
 const Tanks = require("../models/tanks");
 const Users = require("../models/users");
-const Transaction = require("../models/users");
+const Transactions = require("../models/transactions");
 const Sales = require("../models/users");
 const Tweets = require("../models/users");
 const Accounts = require("../models/accounts");
 
-// router.get('', async (req, res) => {
-//     var getFarm = await AddFarm.find({});
-//     res.send(getFarm);
-// })
 router.get("/readFarm", (req, res, next) => {
     AddFarm.find().then(documents => {
         res.status(200).json({
@@ -46,14 +42,14 @@ router.get("/getUsers", (req, res, next) => {
         });
     });
 });
-// router.get("/getTransactions", (req, res, next) => {
-//     Transaction.find().then(documents => {
-//         res.status(200).json({
-//             message: "Transactions fetched successfully!",
-//             Transactions: documents
-//         });
-//     });
-// });
+router.get("/getTransactions", (req, res, next) => {
+    Transactions.find().limit(250).then(documents => {
+        res.status(200).json({
+            message: "Transactions fetched successfully!",
+            Transactions: documents
+        });
+    });
+});
 router.get("/getSales", (req, res, next) => {
     Sales.find().limit(100).then(documents => {
         res.status(200).json({
