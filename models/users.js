@@ -24,4 +24,3 @@ const sales = mongoose.Schema({
 });
 
 module.exports = mongoose.model('Sales', sales);
-

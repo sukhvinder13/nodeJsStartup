@@ -40,7 +40,6 @@
             width: 35px;
             top: 16px;
             position: absolute;
-            border-radius: 50%;
         }
     }
     .sidebar-wrapper{
@@ -49,7 +48,7 @@
         overflow: auto;
         width: 260px;
         z-index: 4;
-        background-color: #c5c5c5;
+
         padding-bottom: 30px;
 
         .dropdown .dropdown-backdrop{
@@ -245,7 +244,6 @@
         display: block;
         position: relative;
         z-index: 4;
-        background-color: #c5c5c5;
 
         &:after{
             content: '';
