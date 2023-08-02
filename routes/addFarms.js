@@ -26,6 +26,39 @@ router.get("/getCustomers", (req, res, next) => {
         });
     });
 });
+router.post("/saveCustomers", (req, res, next) => {
+    const addCustomer= Customers({
+        address: req.body.address,
+        name: req.body.name,
+        email:req.body.email,
+        birthdate:req.body.birthdate
+    })
+    addCustomer.save((err, result) => {
+        if (err) {
+            res.send({
+                status: 500,
+                success: false,
+                message: 'Internal Server error occured while saving farm',
+                err: err
+            });
+        } else {
+            res.send({
+                status: 200,
+                success: true,
+                message: 'Success',
+                result:result
+            });
+        }
+
+    })
+});
+router.post("/deleteCustomer", (req, res, next) => {
+    console.log(req.body.id)
+    Customers.deleteOne({ _id: req.body.id }).then(result => {
+        // console.log(result);
+        res.status(200).json({ message: "Customer deleted!" });
+    });
+});
 router.get("/getInspections", (req, res, next) => {
     Inspections.find().limit(500).then(documents => {
         res.status(200).json({
