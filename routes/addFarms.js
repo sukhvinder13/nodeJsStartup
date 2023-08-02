@@ -27,11 +27,11 @@ router.get("/getCustomers", (req, res, next) => {
     });
 });
 router.post("/saveCustomers", (req, res, next) => {
-    const addCustomer= Customers({
+    const addCustomer = Customers({
         address: req.body.address,
         name: req.body.name,
-        email:req.body.email,
-        birthdate:req.body.birthdate
+        email: req.body.email,
+        birthdate: req.body.birthdate
     })
     addCustomer.save((err, result) => {
         if (err) {
@@ -46,7 +46,7 @@ router.post("/saveCustomers", (req, res, next) => {
                 status: 200,
                 success: true,
                 message: 'Success',
-                result:result
+                result: result
             });
         }
 
@@ -56,7 +56,37 @@ router.post("/deleteCustomer", (req, res, next) => {
     console.log(req.body.id)
     Customers.deleteOne({ _id: req.body.id }).then(result => {
         // console.log(result);
-        res.status(200).json({ message: "Customer deleted!" });
+        res.send({
+            status: 200,
+            success: true,
+            message: 'Deleted Successfully',
+            result: result
+        });
+    });
+});
+router.post("/updateCustomer", (req, res, next) => {
+    Customers.updateOne({ _id: req.body.id }, {
+        name: req.body.name,
+        address: req.body.address,
+        email: req.body.email,
+        birthdate: req.body.birthdate
+    }, function (err, result) {
+
+        if (err) {
+            res.send({
+                status: 500,
+                success: false,
+                message: 'Internal Server error occured while updating',
+                err: err
+            });
+        } else {
+            res.send({
+                status: 200,
+                success: true,
+                message: 'Updated Successfully',
+                result: result
+            });
+        }
     });
 });
 router.get("/getInspections", (req, res, next) => {
@@ -124,8 +154,8 @@ router.post('/addfarm', (req, res) => {
         country: req.body.country,
         noOfTanks: req.body.noOfTanks,
         noOfEmployess: req.body.noOfEmployess,
-        tankCode:req.body.tankCode,
-        tankArea:req.body.tankArea
+        tankCode: req.body.tankCode,
+        tankArea: req.body.tankArea
     })
     addFarm.save((err, result) => {
         if (err) {
@@ -162,7 +192,7 @@ function addTanks(addFarm, req, res) {
     //so mongo have given a function as insertMany to insert multiple record at a single call, lets use it
 
     for (let i = 0; i < addFarm.noOfTanks; i++) {
-        var tankId1 =i;
+        var tankId1 = i;
         tankId1++;
         tankDetails.push({ farmId: addFarm.farmId, tankId: 'T' + tankId1 });
     }
@@ -171,7 +201,7 @@ function addTanks(addFarm, req, res) {
     Tanks.insertMany(tankDetails, function (err, tanks) {
         if (err) {
             res.send({
-                status:500,
+                status: 500,
                 success: false,
                 message: "error based on original error",
                 error: err
