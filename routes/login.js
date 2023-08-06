@@ -20,7 +20,7 @@ router.post('/login', (req, res) => {
                 },
                 'longer-secret-is-better',
                 {
-                  expiresIn: '1m',
+                  expiresIn: '10m',
                 },
               )
         }
