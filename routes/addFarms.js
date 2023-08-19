@@ -19,6 +19,8 @@ router.get("/readFarm", (req, res, next) => {
     });
 });
 router.get("/getCustomers", (req, res, next) => {
+// Users.updateMany({}, { $set: { Role: "User" } });
+
     Customers.find().then(documents => {
         res.status(200).json({
             message: "Customers fetched successfully!",
@@ -65,6 +67,9 @@ router.post("/deleteCustomer", (req, res, next) => {
     });
 });
 router.post("/updateCustomer", (req, res, next) => {
+    console.log(res);
+    console.log(req);
+
     Customers.updateOne({ _id: req.body.id }, {
         name: req.body.name,
         address: req.body.address,
@@ -84,13 +89,13 @@ router.post("/updateCustomer", (req, res, next) => {
                 status: 200,
                 success: true,
                 message: 'Updated Successfully',
-                result: result
+                result: req.body
             });
         }
     });
 });
 router.get("/getInspections", (req, res, next) => {
-    Inspections.find().limit(500).then(documents => {
+    Inspections.find().limit(1000).then(documents => {
         res.status(200).json({
             message: "Inspections fetched successfully!",
             posts: documents
@@ -122,7 +127,7 @@ router.get("/getSales", (req, res, next) => {
     });
 });
 router.get("/getTweets", (req, res, next) => {
-    Tweets.find().limit(100).then(documents => {
+    Tweets.find().limit(50000).then(documents => {
         res.status(200).json({
             message: "Tweets fetched successfully!",
             posts: documents

@@ -1,11 +1,11 @@
 var mongoose = require('mongoose');
 
-// const tankSchema = mongoose.Schema({
+// const Users = mongoose.Schema({
 //   email:{type:String,required:true},
 //   tankId:{type:String,required:true}
 // });
 
-// module.exports = mongoose.model('Users', tankSchema);
+// module.exports = mongoose.model('Users', Users);
 
 
 const tweetSchema = mongoose.Schema({
