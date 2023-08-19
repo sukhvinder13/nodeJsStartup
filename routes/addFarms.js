@@ -1,14 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const AddFarm = require("../models/addFarm");
-const Customers = require("../models/customer");
-const Inspections = require("../models/inspections");
 const Tanks = require("../models/tanks");
-const Users = require("../models/users");
-const Transactions = require("../models/transactions");
-const Sales = require("../models/users");
-const Tweets = require("../models/users");
-const Accounts = require("../models/accounts");
+
 
 router.get("/readFarm", (req, res, next) => {
     AddFarm.find().then(documents => {
@@ -18,130 +12,7 @@ router.get("/readFarm", (req, res, next) => {
         });
     });
 });
-router.get("/getCustomers", (req, res, next) => {
-// Users.updateMany({}, { $set: { Role: "User" } });
 
-    Customers.find().then(documents => {
-        res.status(200).json({
-            message: "Customers fetched successfully!",
-            posts: documents
-        });
-    });
-});
-router.post("/saveCustomers", (req, res, next) => {
-    const addCustomer = Customers({
-        address: req.body.address,
-        name: req.body.name,
-        email: req.body.email,
-        birthdate: req.body.birthdate
-    })
-    addCustomer.save((err, result) => {
-        if (err) {
-            res.send({
-                status: 500,
-                success: false,
-                message: 'Internal Server error occured while saving farm',
-                err: err
-            });
-        } else {
-            res.send({
-                status: 200,
-                success: true,
-                message: 'Success',
-                result: result
-            });
-        }
-
-    })
-});
-router.post("/deleteCustomer", (req, res, next) => {
-    console.log(req.body.id)
-    Customers.deleteOne({ _id: req.body.id }).then(result => {
-        // console.log(result);
-        res.send({
-            status: 200,
-            success: true,
-            message: 'Deleted Successfully',
-            result: result
-        });
-    });
-});
-router.post("/updateCustomer", (req, res, next) => {
-    console.log(res);
-    console.log(req);
-
-    Customers.updateOne({ _id: req.body.id }, {
-        name: req.body.name,
-        address: req.body.address,
-        email: req.body.email,
-        birthdate: req.body.birthdate
-    }, function (err, result) {
-
-        if (err) {
-            res.send({
-                status: 500,
-                success: false,
-                message: 'Internal Server error occured while updating',
-                err: err
-            });
-        } else {
-            res.send({
-                status: 200,
-                success: true,
-                message: 'Updated Successfully',
-                result: req.body
-            });
-        }
-    });
-});
-router.get("/getInspections", (req, res, next) => {
-    Inspections.find().limit(1000).then(documents => {
-        res.status(200).json({
-            message: "Inspections fetched successfully!",
-            posts: documents
-        });
-    });
-});
-router.get("/getUsers", (req, res, next) => {
-    Users.find().limit(500).then(documents => {
-        res.status(200).json({
-            message: "Users fetched successfully!",
-            posts: documents
-        });
-    });
-});
-router.get("/getTransactions", (req, res, next) => {
-    Transactions.find().limit(250).then(documents => {
-        res.status(200).json({
-            message: "Transactions fetched successfully!",
-            Transactions: documents
-        });
-    });
-});
-router.get("/getSales", (req, res, next) => {
-    Sales.find().limit(100).then(documents => {
-        res.status(200).json({
-            message: "Sales fetched successfully!",
-            posts: documents
-        });
-    });
-});
-router.get("/getTweets", (req, res, next) => {
-    Tweets.find().limit(50000).then(documents => {
-        res.status(200).json({
-            message: "Tweets fetched successfully!",
-            posts: documents
-        });
-    });
-});
-router.get("/getAccounts", (req, res, next) => {
-    Accounts.find().limit(100).then(documents => {
-        res.status(200).json({
-            message: "Accounts fetched successfully!",
-            posts: documents
-        });
-    });
-});
 
 router.post('/addfarm', (req, res) => {
     // var AddFarmData = req.body;
@@ -220,6 +91,5 @@ function addTanks(addFarm, req, res) {
         }
     });
 }
-
 
 module.exports = router; 

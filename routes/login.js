@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const Users=require("../models/login");
 const jwt = require("jsonwebtoken");
-const enc =require("dotenv").config();
 
 //posting the data
 router.post('/login', (req, res) => {
