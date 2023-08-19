@@ -11,6 +11,8 @@ const addPictureRoutes=require("./routes/addPicture");
 const login=require("./routes/login");
 const customerRoutes=require("./routes/customer");
 
+const usersData=require("./routes/usersData");
+
 const app = express();
 
 // mongoose
@@ -64,6 +66,7 @@ app.use('/',require('./routes/cultivation'));
 app.use('/',require('./routes/imageUploader'));
 app.use('/',addPictureRoutes);
 app.use('/',login);
+app.use('/',usersData);
 app.use('/',customerRoutes);
 
 
