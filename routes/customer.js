@@ -5,7 +5,14 @@ const Transactions = require("../models/transactions");
 let estimate = 0;
 let transactionCount = 0;
 let totalTransactionAmount = 0;
-
+const Users=require("../models/login");
+const nDate = new Date().toLocaleString('en-US', {
+    timeZone: 'Asia/Calcutta'
+  });
+  var moment = require('moment');
+  let newDate=moment().format("YYYY-MM-DD HH:mm:ss")
+console.log(moment().format("YYYY-MM-DD HH:mm:ss"));
+console.log(nDate)
 router.get("/getCustomers", (req, res, next) => {
     Customers.find().then(documents => {
         res.status(200).json({
@@ -29,7 +36,10 @@ router.post("/saveCustomers", (req, res, next) => {
         address: req.body.address,
         name: req.body.name,
         email: req.body.email,
-        birthdate: req.body.birthdate
+        birthdate: req.body.birthdate,
+        updatedBy: req.body.updatedBy,
+        updatedDate: newDate,
+        createdDate: newDate,
     })
     addCustomer.save((err, result) => {
         if (err) {
@@ -67,7 +77,9 @@ router.post("/updateCustomer", (req, res, next) => {
         name: req.body.name,
         address: req.body.address,
         email: req.body.email,
-        birthdate: req.body.birthdate
+        birthdate: req.body.birthdate,
+        updatedBy: req.body.updatedBy,
+        updatedDate: newDate,
     }, function (err, result) {
 
         if (err) {
@@ -89,9 +101,6 @@ router.post("/updateCustomer", (req, res, next) => {
 });
 async function run() {
     try {
-        //   const movies = Customers.collection("movies");
-        // Estimate the total number of documents in the collection
-        // and print out the count.
         group = 0
         estimate = await Customers.estimatedDocumentCount();
         transactionCount = await Transactions.aggregate([

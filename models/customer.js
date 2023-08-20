@@ -5,6 +5,9 @@ const postSchema = mongoose.Schema({
   email: { type: String, required: true },
   address: { type: String, required: true },
   birthdate: { type: String, required: true },
+  updatedBy: { type: String, required: true },
+  updatedDate: { type: Date, required: true },
+  createdDate: { type: Date, required: true },
   
 });
 
