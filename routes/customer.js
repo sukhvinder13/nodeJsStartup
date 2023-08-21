@@ -10,6 +10,7 @@ const nDate = new Date().toLocaleString('en-US', {
     timeZone: 'Asia/Calcutta'
   });
   var moment = require('moment');
+  let newDate1=moment().format("YYYY-MM-DD HH:mm:ss:000+00:00")
   let newDate=moment().format("YYYY-MM-DD HH:mm:ss")
 console.log(moment().format("YYYY-MM-DD HH:mm:ss"));
 console.log(nDate)
@@ -21,6 +22,17 @@ router.get("/getCustomers", (req, res, next) => {
         });
     });
 });
+// router.get("/getCustomerInfo", (req, res, next) => {
+//     Customers.find({
+//          birthdate: { $gte:  newDate1, 
+//           $lte: newDate1 }
+//     }).then(documents => {
+//         res.status(200).json({
+//             message: "Customers fetched successfully!",
+//             posts: documents
+//         });
+//     });
+// });
 router.get("/getCustomerCount", (req, res, next) => {
     res.send({
         status: 200,
