@@ -9,7 +9,7 @@ const Accounts = require("../models/accounts");
 
 
 router.get("/getInspections", (req, res, next) => {
-    Inspections.find().limit(1000).then(documents => {
+    Inspections.find().limit(5000).then(documents => {
         res.status(200).json({
             message: "Inspections fetched successfully!",
             posts: documents
@@ -17,7 +17,7 @@ router.get("/getInspections", (req, res, next) => {
     });
 });
 router.get("/getUsers", (req, res, next) => {
-    Users.find().limit(500).then(documents => {
+    Users.find().limit(4500).then(documents => {
         res.status(200).json({
             message: "Users fetched successfully!",
             posts: documents
@@ -25,7 +25,7 @@ router.get("/getUsers", (req, res, next) => {
     });
 });
 router.get("/getTransactions", (req, res, next) => {
-    Transactions.find().limit(250).then(documents => {
+    Transactions.find().limit(5000).then(documents => {
         res.status(200).json({
             message: "Transactions fetched successfully!",
             Transactions: documents
@@ -33,7 +33,7 @@ router.get("/getTransactions", (req, res, next) => {
     });
 });
 router.get("/getSales", (req, res, next) => {
-    Sales.find().limit(100).then(documents => {
+    Sales.find().limit(5000).then(documents => {
         res.status(200).json({
             message: "Sales fetched successfully!",
             posts: documents
@@ -49,7 +49,7 @@ router.get("/getTweets", (req, res, next) => {
     });
 });
 router.get("/getAccounts", (req, res, next) => {
-    Accounts.find().limit(100).then(documents => {
+    Accounts.find().limit(5100).then(documents => {
         res.status(200).json({
             message: "Accounts fetched successfully!",
             posts: documents
