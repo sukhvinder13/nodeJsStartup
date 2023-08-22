@@ -4,8 +4,9 @@ const Inspections = require("../models/inspections");
 const Users = require("../models/users");
 const Transactions = require("../models/transactions");
 const Sales = require("../models/users");
-const Tweets = require("../models/users");
+// const Tweets = require("../models/users");
 const Accounts = require("../models/accounts");
+const Tweets = require("../models/tweets");
 
 
 router.get("/getInspections", (req, res, next) => {

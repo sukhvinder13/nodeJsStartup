@@ -12,8 +12,8 @@ router.post('/login', (req, res) => {
         {
           email: user.email,
           _id: user._id,
-          name: user.name
-          //   userId: getUser._id,
+          name: user.name,
+            role: user.role,
         },
         'longer-secret-is-better',
         {

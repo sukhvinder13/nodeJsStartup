@@ -5,13 +5,13 @@ const Transactions = require("../models/transactions");
 let estimate = 0;
 let transactionCount = 0;
 let totalTransactionAmount = 0;
-const Users=require("../models/login");
+const Users = require("../models/login");
 const nDate = new Date().toLocaleString('en-US', {
     timeZone: 'Asia/Calcutta'
-  });
-  var moment = require('moment');
-  let newDate1=moment().format("YYYY-MM-DD HH:mm:ss:000+00:00")
-  let newDate=moment().format("YYYY-MM-DD HH:mm:ss")
+});
+var moment = require('moment');
+let newDate1 = moment().format("YYYY-MM-DD HH:mm:ss:000+00:00")
+let newDate = moment().format("YYYY-MM-DD HH:mm:ss")
 console.log(moment().format("YYYY-MM-DD HH:mm:ss"));
 console.log(nDate)
 router.get("/getCustomers", (req, res, next) => {
@@ -22,18 +22,9 @@ router.get("/getCustomers", (req, res, next) => {
         });
     });
 });
-// router.get("/getCustomerInfo", (req, res, next) => {
-//     Customers.find({
-//          birthdate: { $gte:  newDate1, 
-//           $lte: newDate1 }
-//     }).then(documents => {
-//         res.status(200).json({
-//             message: "Customers fetched successfully!",
-//             posts: documents
-//         });
-//     });
-// });
+
 router.get("/getCustomerCount", (req, res, next) => {
+    run();
     res.send({
         status: 200,
         success: true,
@@ -41,7 +32,6 @@ router.get("/getCustomerCount", (req, res, next) => {
         transactionCount: estimate,
         totalValue: totalTransactionAmount
     });
-    run();
 });
 router.post("/saveCustomers", (req, res, next) => {
     const addCustomer = Customers({
@@ -128,7 +118,7 @@ async function run() {
                 }
             }
         ]);
-        totalTransactionAmount=transactionCount[0].amount
+        totalTransactionAmount = transactionCount[0].amount
         return estimate, totalTransactionAmount
     } finally {
         //   await client.close();

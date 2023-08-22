@@ -8,12 +8,12 @@ var mongoose = require('mongoose');
 // module.exports = mongoose.model('Users', Users);
 
 
-const tweetSchema = mongoose.Schema({
-  farmId:{type:String,required:true},
-  tankId:{type:String,required:true}
-});
+// const tweetSchema = mongoose.Schema({
+//   farmId:{type:String,required:true},
+//   tankId:{type:String,required:true}
+// });
 
-module.exports = mongoose.model('Tweets', tweetSchema);
+// module.exports = mongoose.model('Tweets', tweetSchema);
 
 const sales = mongoose.Schema({
   farmId:{type:String,required:true},
