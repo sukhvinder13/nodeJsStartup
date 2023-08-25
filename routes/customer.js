@@ -42,6 +42,9 @@ router.post("/saveCustomers", (req, res, next) => {
         updatedBy: req.body.updatedBy,
         updatedDate: newDate,
         createdDate: newDate,
+        accounts: req.body.accounts,
+        tier_and_details: req.body.tier_and_details,
+        username: req.body.username,
     })
     addCustomer.save((err, result) => {
         if (err) {
