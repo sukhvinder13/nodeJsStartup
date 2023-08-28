@@ -68,7 +68,6 @@ router.post("/saveCustomers", (req, res, next) => {
 router.post("/deleteCustomer", (req, res, next) => {
     console.log(req.body.id)
     Customers.deleteOne({ _id: req.body.id }).then(result => {
-        // console.log(result);
         res.send({
             status: 200,
             success: true,
