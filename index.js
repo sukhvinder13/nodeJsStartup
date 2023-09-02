@@ -12,6 +12,8 @@ const login=require("./routes/login");
 const customerRoutes=require("./routes/customer");
 
 const usersData=require("./routes/usersData");
+const conversationRoutes=require("./routes/conversations");
+const storiesRoutes=require("./routes/stories");
 
 const app = express();
 
@@ -68,6 +70,8 @@ app.use('/',addPictureRoutes);
 app.use('/',login);
 app.use('/',usersData);
 app.use('/',customerRoutes);
+app.use('/',conversationRoutes);
+app.use('/',storiesRoutes);
 
 
 module.exports = app;

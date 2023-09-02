@@ -11,6 +11,9 @@ const addFarmWaterReportRoutes=require("./routes/addFarmWaterReport");
 const addPictureRoutes=require("./routes/addPicture");
 const usersData=require("./routes/usersData");
 const login=require("./routes/login");
+const conversationRoutes=require("./routes/conversations");
+const storiesRoutes=require("./routes/stories");
+
 const app = express();
 
 // mongoose
@@ -66,6 +69,9 @@ app.use('/',addPictureRoutes);
 app.use('/',customerRoutes);
 app.use('/',usersData);
 app.use('/',login);
+app.use('/',conversationRoutes);
+app.use('/',storiesRoutes);
+
 
 
 module.exports = app;
