@@ -5,12 +5,10 @@ const Transactions = require("../models/transactions");
 let estimate = 0;
 let transactionCount = 0;
 let totalTransactionAmount = 0;
-const Users = require("../models/login");
 const nDate = new Date().toLocaleString('en-US', {
     timeZone: 'Asia/Calcutta'
 });
 var moment = require('moment');
-let newDate1 = moment().format("YYYY-MM-DD HH:mm:ss:000+00:00")
 let newDate = moment().format("YYYY-MM-DD HH:mm:ss")
 console.log(moment().format("YYYY-MM-DD HH:mm:ss"));
 console.log(nDate)
@@ -23,8 +21,8 @@ router.get("/getCustomers", (req, res, next) => {
     });
 });
 
-router.get("/getCustomerCount", (req, res, next) => {
-    run();
+router.get("/getCustomerCount", async (req, res, next) => {
+    await run();
     res.send({
         status: 200,
         success: true,
@@ -66,7 +64,6 @@ router.post("/saveCustomers", (req, res, next) => {
     })
 });
 router.post("/deleteCustomer", (req, res, next) => {
-    console.log(req.body.id)
     Customers.deleteOne({ _id: req.body.id }).then(result => {
         res.send({
             status: 200,
@@ -77,7 +74,7 @@ router.post("/deleteCustomer", (req, res, next) => {
     });
 });
 router.post("/updateCustomer", (req, res, next) => {
-    Customers.updateOne({ _id: req.body.id }, {
+    Customers.findByIdAndUpdate({ _id: req.body.id }, {
         name: req.body.name,
         address: req.body.address,
         email: req.body.email,

@@ -2,61 +2,53 @@ const express = require("express");
 const router = express.Router();
 const Users = require("../models/login");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs")
+const bcrypt = require("bcryptjs");
+require('dotenv').config(); // For environment variables
 
-//posting the data
-router.post('/login', (req, res) => {
-  let jwtToken;
-  // login()
-  Users.findOne({ 'email': req.body.email }, function (err, user) {
-    if (user) {
-      jwtToken = jwt.sign(
-        {
-          email: user.email,
-          _id: user._id,
-          name: user.name,
-            role: user.role,
-        },
-        'longer-secret-is-better',
-        {
-          expiresIn: '10m',
-        },
-      )
+// POST /login
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    // Check if user exists
+    const user = await Users.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ isAuth: false, message: 'Auth failed: email not found' });
     }
-    if (!user) return res.json({ isAuth: false, message: ' Auth failed ,email not found' });
-    if (user) return res.json({ isAuth: true, token: user, jwtToken: jwtToken, message: ' Auth Success ,email found' });
-  })
-})
-function login(){
 
-const passwordEnteredByUser = "mypass123"
-const hash = "$2a$10$FEBywZh8u9M0Cec/0mWep.1kXrwKeiWDba6tdKvDfEBjyePJnDT7K"
+    // Validate password
+    // const isMatch = await bcrypt.compare(password, user.password);
+    // if (!isMatch) {
+    //   return res.status(401).json({ isAuth: false, message: 'Auth failed: incorrect password' });
+    // }
 
-bcrypt.compare(passwordEnteredByUser, hash, function(error, isMatch) {
-  if (error) {
-    throw error
-  } else if (!isMatch) {
-    console.log("Password doesn't match!")
-  } else {
-    console.log("Password matches!")
+    // Generate JWT
+    const jwtToken = jwt.sign(
+      {
+        email: user.email,
+        _id: user._id,
+        name: user.name,
+        role: user.role,
+      },
+      process.env.JWT_SECRET || 'longer-secret-is-better', // Use env in production
+      {
+        expiresIn: '10m',
+      }
+    );
+
+    // Success response
+    return res.status(200).json({
+      isAuth: true,
+      jwtToken,
+      token: user,
+      message: 'Auth successful',
+    });
+    // if (user) return res.json({ isAuth: true, token: user, jwtToken: jwtToken, message: ' Auth Success ,email found' });
+
+  } catch (err) {
+    console.error('Login error:', err);
+    return res.status(500).json({ isAuth: false, message: 'Internal server error' });
   }
 });
-const password = "mypass123"
-const saltRounds = 10
 
-bcrypt.genSalt(saltRounds, function (saltError, salt) {
-  if (saltError) {
-    throw saltError
-  } else {
-    bcrypt.hash(password, salt, function(hashError, hash) {
-      if (hashError) {
-        throw hashError
-      } else {
-        console.log(hash)
-        //$2a$10$FEBywZh8u9M0Cec/0mWep.1kXrwKeiWDba6tdKvDfEBjyePJnDT7K
-      }
-    })
-  }
-})
-}
-module.exports = router; 
+module.exports = router;
