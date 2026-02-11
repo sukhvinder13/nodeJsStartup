@@ -1,87 +1,55 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
-// const mysql = require("mysql");
+const connectDB = require("./config/database");
+const corsMiddleware = require("./middleware/corsMiddleware");
+const errorHandler = require("./middleware/errorHandler");
 
+// Import Routes
 const addFarmRoutes = require("./routes/addFarms");
-const customerRoutes=require("./routes/customer");
 const addFarmOwnerRoutes = require("./routes/addFarmOwner");
 const addFarmMedicinRoutes = require("./routes/addFarmMedicin");
-const addFarmWaterReportRoutes=require("./routes/addFarmWaterReport");
-const addPictureRoutes=require("./routes/addPicture");
-const usersData=require("./routes/usersData");
-const login=require("./routes/login");
-const conversationRoutes=require("./routes/conversations");
-const storiesRoutes=require("./routes/stories");
+const addFarmWaterReportRoutes = require("./routes/addFarmWaterReport");
+const addPictureRoutes = require("./routes/addPicture");
+const login = require("./routes/login");
+const customerRoutes = require("./routes/customer");
+const usersData = require("./routes/usersData");
+const conversationRoutes = require("./routes/conversations");
+const storiesRoutes = require("./routes/stories");
+const cultivationRoutes = require("./routes/cultivation");
+const imageUploaderRoutes = require("./routes/imageUploader");
 
 const app = express();
 
-// mongoose
-//   .connect('mongodb://localhost:27017/shrimp',
-//     { useNewUrlParser: true, useUnifiedTopology: true }
-//   )
-//   .then(() => {
-//     console.log("Connected to database!");
-//   })
-//   .catch((err) => {
-//     console.log("Connection failed!", err);
-//   });
-  // mongodb+srv://sukhvinder_2324:Mongodb@123@cluster0.xef28.mongodb.net/shrimp
-  // mongodb+srv://sukhvinder_2324:<password>@cluster0.xef28.mongodb.net/test
-  const db='mongodb+srv://sukhvinder_2324:Manshu@cluster0.xef28.mongodb.net/shrimp?retryWrites=true&w=majority'
-mongoose
-  .connect(db,
-  {useNewUrlParser: true,
-     useUnifiedTopology: true}
-  )
-  .then(() => {
-    console.log("Connected to database!");
-  })
-  .catch((err) => {
-    console.log("Connection failed!",err);
-  });
+// Initialize Database Connection
+connectDB();
 
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept",
-    'Access-Control-Allow-Origin', '*'
-  );
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PATCH, DELETE,PUT, OPTIONS"
-  );
-  next();
-});
+// Middleware
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+app.use(corsMiddleware);
 app.use(express.static("frontend"));
-app.use("/", addFarmRoutes);
-app.use("/", addFarmOwnerRoutes);
-app.use("/",addFarmMedicinRoutes);
-app.use("/",addFarmWaterReportRoutes);
-app.use('/',require('./routes/cultivation'));
-app.use('/',require('./routes/imageUploader'));
-app.use('/',addPictureRoutes);
-app.use('/',customerRoutes);
-app.use('/',usersData);
-app.use('/',login);
-app.use('/',conversationRoutes);
-app.use('/',storiesRoutes);
 
+// Route Registration
+const routes = [
+  addFarmRoutes,
+  addFarmOwnerRoutes,
+  addFarmMedicinRoutes,
+  addFarmWaterReportRoutes,
+  addPictureRoutes,
+  login,
+  usersData,
+  customerRoutes,
+  conversationRoutes,
+  storiesRoutes,
+  cultivationRoutes,
+  imageUploaderRoutes
+];
 
+routes.forEach(route => app.use("/", route));
+
+// Error Handling Middleware
+app.use(errorHandler);
 
 module.exports = app;
- // this is the main entry file, this need not be exported
-app.listen(3000,(err)=>{
-  if(err){
-    console.log('error occured while running server');
-  }else{
-    console.log('Server is running on port no 3000')
-  }
-})
 
 

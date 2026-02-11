@@ -1,57 +1,33 @@
 const express = require("express");
 const router = express.Router();
-const AddFarmowner=require("../models/addFarmOwner");
+const AddFarmowner = require("../models/addFarmOwner");
+const CRUDService = require("../services/crudService");
+const { successResponse, errorResponse } = require("../utils/responseHandler");
 
-//getting the records
-router.get("/readFarmOwner", (req, res, next) => {
-    AddFarmowner.find().then(documents => {
-        res.status(200).json({
-            message: "Farms Owner fetched successfully!",
-            posts: documents
-        });
-    });
+const farmOwnerService = new CRUDService(AddFarmowner);
+
+router.get("/readFarmOwner", async (req, res, next) => {
+    try {
+        const documents = await farmOwnerService.getAll();
+        res.status(200).json(successResponse(200, "Farm owners fetched successfully!", documents));
+    } catch (error) {
+        res.status(error.status || 500).json(errorResponse(error.status || 500, error.message));
+    }
 });
 
-//posting the data
-router.post('/addfarmowner', (req, res) => {
-   
-    console.log('farm owner')
-    const AddFarmOwner1 = new AddFarmowner({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        mobile: req.body.mobile,
-        // address: req.body.address,
-        // referral: req.body.referral,
-        // pan: req.body.pan,
-        // adhaar: req.body.adhaar,
-        // panFile: req.body.panFile,
-        // adhaarFile: req.body.adhaarFile,
-        // companyName: req.body.companyName,
-        // companyPan: req.body.companyPan,
-        // companyAdhaar: req.body.companyAdhaar,
-        // companyGstNo: req.body.companyGstNo,
-        // companyPanFile: req.body.companyPanFile,
-        // companyAdhaarFile: req.body.companyAdhaarFile
-    })
-    AddFarmOwner1.save((err, result) => {
-        if (err) {
-            console.log("error saving farm owner.")
-            console.log(err.message);
-            console.log(err);
-            res.send({
-                status: 500,
-                success: false,
-                message: 'Internal Server error occured while saving farm',
-                err: err
-            });
-        } else {
-            res.send({
-                status: 200,
-                success: true,
-                message: "farms owner saved successfully"
-            });
-        }
+router.post('/addfarmowner', async (req, res, next) => {
+    try {
+        const farmOwnerData = {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            mobile: req.body.mobile
+        };
 
-    })
-})
+        const result = await farmOwnerService.create(farmOwnerData);
+        res.status(200).json(successResponse(200, "Farm owner saved successfully!", result));
+    } catch (error) {
+        res.status(error.status || 500).json(errorResponse(error.status || 500, error.message));
+    }
+});
+
 module.exports = router; 
